@@ -1,0 +1,43 @@
+a) Program Structure
+
+Program.cs – Entry point of the simulation. Runs the simulation for different values of K (5, 20, 100) and displays execution times.
+
+Simulation.cs – Contains the simulation logic:
+
+Worker(int workerId, Queue<int> workQueue) – Simulates the painting task for each worker.
+
+Run(int K) – Starts K worker threads, distributes work, and measures execution time.
+
+ShowProgress(int paintedCount, int total) – Displays a real-time progress bar in the console.
+
+The program uses multi-threading (System.Threading.Thread) to simulate parallel work of multiple workers.
+
+b) Evaluation of Tasks
+
+Is this problem parallelizable?
+Yes, multiple workers can paint circles simultaneously.
+
+How would the problem be partitioned?
+Circles are stored in a shared queue. Each worker thread takes the next available circle from the queue.
+
+Are communications needed?
+Minimal communication is required. Workers share the queue and the painted status array. No direct messaging between workers is implemented.
+
+Are there any data dependencies?
+Yes, the shared array painted indicates which circles have already been painted. The paintedCount keeps track of the total number of painted circles.
+
+Are there synchronization needs?
+Yes, access to the shared queue and the painted array is synchronized using locks (lock keyword). The paintedCount is updated atomically using Interlocked.Increment().
+
+Will load balancing be a concern?
+Minimal concern. Load is dynamically balanced because each worker continuously takes the next circle from the queue until all circles are painted.
+
+c) Test Results
+K	Execution Time (seconds)
+5	~7.44
+20	~1.87
+100	~0.37
+
+Progress bar in the console visualizes the painting process in real time.
+
+All circles are painted correctly in each test case.

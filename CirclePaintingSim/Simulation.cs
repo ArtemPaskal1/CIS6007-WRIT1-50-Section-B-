@@ -11,7 +11,7 @@ public class Simulation
     static bool[] painted = new bool[NUM_CIRCLES];
     static readonly object paintLock = new object();
     static int paintedCount = 0;
-    static readonly object consoleLock = new object(); // Для потокобезопасного вывода
+    static readonly object consoleLock = new object();
 
     static void Worker(int workerId, Queue<int> workQueue)
     {
@@ -85,7 +85,7 @@ public class Simulation
             Console.CursorLeft = 0;
             Console.Write($"Progress: [{new string('█', filled)}{new string('-', empty)}] {(int)(ratio * 100)}%");
             if (paintedCount == total)
-                Console.WriteLine(); // перенос строки при завершении
+                Console.WriteLine();
         }
     }
 }
